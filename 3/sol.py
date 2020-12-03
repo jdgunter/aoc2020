@@ -12,22 +12,11 @@ class Slope:
     def __init__(self, lines):
         self.width = len(lines[0]) - 1  # -1 to account for ending newline
         self.length = len(lines)
-        self.tree_positions = [self._parse_trees(line) for line in lines]
-
-    @staticmethod
-    def _parse_trees(line):
-        """Parse positions of tree in a line."""
-        tree_positions_row = []
-        for char in line:
-            if char == '.':
-                tree_positions_row.append(False)
-            elif char == '#':
-                tree_positions_row.append(True)
-        return tree_positions_row
+        self.tree_positions = lines
 
     def tree_at(self, row, col):
         """Check if a tree exists at the given position."""
-        return self.tree_positions[row][col % self.width]
+        return self.tree_positions[row][col % self.width] == '#'
     
     def count_trees_on_slope(self, delta_x, delta_y, origin_x=0, origin_y=0):
         """Count number of trees following a set path down the slope.
