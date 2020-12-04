@@ -46,8 +46,6 @@ def contains_required_fields(fields):
 
 def validate_passport(**kwargs):
     """Validate a single passport."""
-    if kwargs == {}:
-        return False
     try:
         if contains_required_fields(kwargs.keys()):
             return all([validation_funcs[key](value) for key, value in kwargs.items()])
