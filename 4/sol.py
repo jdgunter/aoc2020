@@ -3,9 +3,9 @@
 import re
 
 
-def read_input_lines():
+def read_input():
     with open('input') as f:
-        return f.readlines()
+        return f.read().split('\n\n')
 
 
 def validate_hgt(value):
@@ -44,31 +44,23 @@ def contains_required_fields(fields):
     return True
 
 
-def validate_passport(**kwargs):
+def validate_passport(fields):
     """Validate a single passport."""
     try:
-        if contains_required_fields(kwargs.keys()):
-            return all([validation_funcs[key](value) for key, value in kwargs.items()])
+        if contains_required_fields(fields.keys()):
+            return all([validation_funcs[key](value) for key, value in fields.items()])
         return False
     except:
         return False
 
 
-def count_valid_passports(lines):
+def count_valid_passports(input):
     """Count the valid passports in the sequence of lines."""
-    current_passport_fields = {}
     num_valid = 0
-    for line in lines:
-        if line == '\n':
-            num_valid += validate_passport(**current_passport_fields)
-            current_passport_fields = {}
-        else:
-            kv_pairs = {word.split(':')[0]: word.split(':')[1] for word in line.split()}
-            current_passport_fields.update(kv_pairs)
-    # Validate the final password. This does not happen in the loop above 
-    # because there is no ending newline.
-    num_valid += validate_passport(**current_passport_fields)
+    for passport_string in input:
+        passport_fields = {word.split(':')[0]: word.split(':')[1] for word in passport_string.split()}
+        num_valid += validate_passport(passport_fields)
     return num_valid
 
 
-print(count_valid_passports(read_input_lines()))
+print(count_valid_passports(read_input()))
