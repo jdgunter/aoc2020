@@ -7,19 +7,18 @@ def read_input():
         return f.read().split('\n\n')
 
 def count_any_yes(group):
-    return len(set(group))
+    return len(set(group.replace('\n', '')))
 
 def count_all_yes(group):
     return len(reduce(
         lambda set_a, set_b: set_a.intersection(set_b),
-        (set(member) for member in group)))
+        (set(member) for member in group.split('\n'))))
 
-def yes_count(counting_func, parse_method, *args):
+def yes_count(counting_func):
     count = 0
     for group in read_input():
-        group = getattr(group, parse_method)(*args)
         count += counting_func(group)
     return count
 
-print('Part 1:', yes_count(count_any_yes, 'replace', '\n', ''))
-print('Part 2:', yes_count(count_all_yes, 'split', '\n'))
+print('Part 1:', yes_count(count_any_yes))
+print('Part 2:', yes_count(count_all_yes))
