@@ -10,9 +10,7 @@ def count_any_yes(group):
     return len(set(group.replace('\n', '')))
 
 def count_all_yes(group):
-    return len(reduce(
-        lambda set_a, set_b: set_a.intersection(set_b),
-        (set(member) for member in group.split('\n'))))
+    return len(reduce(set.intersection, map(set, group.split('\n'))))
 
 def yes_count(counting_func):
     return sum(counting_func(group) for group in read_input())
