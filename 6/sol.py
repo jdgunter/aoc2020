@@ -15,10 +15,7 @@ def count_all_yes(group):
         (set(member) for member in group.split('\n'))))
 
 def yes_count(counting_func):
-    count = 0
-    for group in read_input():
-        count += counting_func(group)
-    return count
+    return sum([counting_func(group) for group in read_input()])
 
 print('Part 1:', yes_count(count_any_yes))
 print('Part 2:', yes_count(count_all_yes))
