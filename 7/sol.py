@@ -58,7 +58,7 @@ class BagDAG:
         for outer_bag in self.reverse_arcs[bag]:
             self.bags_containing[bag].add(outer_bag)
             if outer_bag not in self.bags_containing:
-                self.bags_containing[outer_bag] = self.compute_bags_containing(outer_bag)
+                self.compute_bags_containing(outer_bag)
             self.bags_containing[bag].update(self.bags_containing[outer_bag])
         return self.bags_containing[bag]
 
