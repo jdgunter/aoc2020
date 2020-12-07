@@ -14,7 +14,7 @@ class BagDAG:
         self.vertices = set()
         self.arcs = {}
         self.reverse_arcs = {}
-        self.bags_containing = {}
+        self._bags_containing = {}
         for bag_rule in bag_rules:
             self.process_bag_rule(bag_rule)
 
@@ -45,22 +45,20 @@ class BagDAG:
         self.arcs[vertex] = {}
         self.reverse_arcs[vertex] = {}
 
-    def compute_bags_containing(self, bag):
+    def bags_containing(self, bag):
         """Recursively compute the set of bags containing a bag.
         
         Stores the results in a dictionary mapping bags to a 
         a map of containing bags to number of copies of the first bag stored.
         """
-        if bag in self.bags_containing:
-            return self.bags_containing[bag]
+        if bag in self._bags_containing:
+            return self._bags_containing[bag]
 
-        self.bags_containing[bag] = set()
+        self._bags_containing[bag] = set()
         for outer_bag in self.reverse_arcs[bag]:
-            self.bags_containing[bag].add(outer_bag)
-            if outer_bag not in self.bags_containing:
-                self.compute_bags_containing(outer_bag)
-            self.bags_containing[bag].update(self.bags_containing[outer_bag])
-        return self.bags_containing[bag]
+            self._bags_containing[bag].add(outer_bag)
+            self._bags_containing[bag].update(self.bags_containing(outer_bag))
+        return self._bags_containing[bag]
 
     def count_bags_inside(self, bag):
         """Recursively compute the set of bags contained inside of a bag."""
@@ -73,7 +71,7 @@ class BagDAG:
 
 def main():
     dag = BagDAG(read_input_lines())
-    print('Part 1:', len(dag.compute_bags_containing('shiny gold')))
+    print('Part 1:', len(dag.bags_containing('shiny gold')))
     print('Part 2:', dag.count_bags_inside('shiny gold'))
 
 
