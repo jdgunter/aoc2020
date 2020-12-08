@@ -1,4 +1,4 @@
-"""Template."""
+"""Solution to Advent of Code Day 8."""
 
 from collections import namedtuple, defaultdict
 
