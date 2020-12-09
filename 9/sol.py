@@ -41,5 +41,6 @@ def find_weakness(numbers):
     sublist = sublist_sum(numbers, find_invalid_number(numbers))
     return min(sublist) + max(sublist)
 
-print('Part 1:', find_invalid_number(list(map(int, read_input_lines()))))
-print('Part 2:', find_weakness(list(map(int, read_input_lines()))))
+input = list(map(int, read_input_lines()))
+print('Part 1:', find_invalid_number(input))
+print('Part 2:', find_weakness(input))
