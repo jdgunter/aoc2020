@@ -24,20 +24,18 @@ print('Part 1:', one_differences * three_differences)
 def count_arrangements(adapters):
     adapters = sorted([0] + adapters) 
     num_adapters = len(adapters)
-    lookup_table = [None] * num_adapters
+    lookup_table = [0] * num_adapters
 
     def _count_arrangements(index):
         if index == num_adapters - 1:
             return 1
-        if lookup_table[index] is None:
+        if lookup_table[index] == 0:
             joltage = adapters[index]
-            num_arrangements = 0
             for other_joltage, other_index in zip(
                     adapters[index+1:index+4], range(index+1, index+4)):
                 for delta in [1,2,3]:
                     if joltage + delta == other_joltage:
-                        num_arrangements += _count_arrangements(other_index)
-            lookup_table[index] = num_arrangements
+                        lookup_table[index] += _count_arrangements(other_index)
         return lookup_table[index]
 
     return _count_arrangements(0)
