@@ -21,29 +21,26 @@ print('Part 1:', one_differences * three_differences)
 
 
 # Part 2.
-class ArrangementCounter:
+def count_arrangements(adapters):
+    adapters = sorted([0] + adapters) 
+    num_adapters = len(adapters)
+    lookup_table = [None] * num_adapters
 
-    def __init__(self, adapters):
-        self.adapters = sorted([0] + adapters) 
-        self.num_adapters = len(self.adapters)
-        self.lookup_table = [None] * self.num_adapters
-
-    def count(self):
-        return self._count_arrangements(0)
-
-    def _count_arrangements(self, index):
-        if index == self.num_adapters - 1:
+    def _count_arrangements(index):
+        if index == num_adapters - 1:
             return 1
-        if self.lookup_table[index] is None:
-            joltage = self.adapters[index]
+        if lookup_table[index] is None:
+            joltage = adapters[index]
             num_arrangements = 0
             for other_joltage, other_index in zip(
-                    self.adapters[index+1:index+4], range(index+1, index+4)):
+                    adapters[index+1:index+4], range(index+1, index+4)):
                 for delta in [1,2,3]:
                     if joltage + delta == other_joltage:
-                        num_arrangements += self._count_arrangements(other_index)
-            self.lookup_table[index] = num_arrangements
-        return self.lookup_table[index]
+                        num_arrangements += _count_arrangements(other_index)
+            lookup_table[index] = num_arrangements
+        return lookup_table[index]
+
+    return _count_arrangements(0)
 
 
-print('Part 2:', ArrangementCounter(input).count())
+print('Part 2:', count_arrangements(input))
