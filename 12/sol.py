@@ -10,9 +10,10 @@ def read_input_lines():
 
 class Ship:
 
-    def __init__(self, initial_waypoint, translated_member):
+    def __init__(self, initial_waypoint, *, translated_member):
         self.position = 0 + 0j
         self.waypoint = initial_waypoint
+        assert translated_member in self.__dict__
         self.key = translated_member
 
     def process_move(self, move):

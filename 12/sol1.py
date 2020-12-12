@@ -1,4 +1,4 @@
-"""Solution to Advent of Code day 12."""
+"""Solution to Advent of Code day 12 part 1."""
 
 from collections import namedtuple
 from enum import IntEnum
