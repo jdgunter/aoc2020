@@ -14,15 +14,15 @@ class Ship:
         self.position = 0 + 0j
         self.waypoint = initial_waypoint
         assert translated_member in self.__dict__
-        self.key = translated_member
+        self.translated_member = translated_member
 
     def process_move(self, move):
         action = move[0]
         value = int(move[1:])
-        if   action == 'N': self.__dict__[self.key] += value * 1j
-        elif action == 'S': self.__dict__[self.key] -= value * 1j
-        elif action == 'E': self.__dict__[self.key] += value
-        elif action == 'W': self.__dict__[self.key] -= value
+        if   action == 'N': self.__dict__[self.translated_member] += value * 1j
+        elif action == 'S': self.__dict__[self.translated_member] -= value * 1j
+        elif action == 'E': self.__dict__[self.translated_member] += value
+        elif action == 'W': self.__dict__[self.translated_member] -= value
         elif action == 'L': self.waypoint *= 1j ** int(value/90)
         elif action == 'R': self.waypoint *= 1j ** (3 * int(value/90))
         elif action == 'F': self.position += value * self.waypoint
